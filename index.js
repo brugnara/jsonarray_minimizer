@@ -2,7 +2,7 @@ module.exports = function obj_converter(obj){
     if(obj.constructor === [].constructor){
     //check input for array[]
         for(var ind=0; ind< obj.length; ind++){
-            if(!obj[ind]){
+            if(!~[0, false].indexOf(obj[ind]) && !obj[ind]){
                 obj.splice(ind,1);
                 obj_converter(obj);
             }else if(obj[ind].constructor === [].constructor){
@@ -21,11 +21,11 @@ module.exports = function obj_converter(obj){
                     }
             }
         }
-        
+
     }else if(obj.constructor === {}.constructor){
         //check input for json object
         for (var key in obj){
-            if(!obj[key]){
+            if(!~[0, false].indexOf(obj[key]) && !obj[key]){
                 delete obj[key];
                 obj_converter(obj);
             }else if(obj[key].constructor === [].constructor){
